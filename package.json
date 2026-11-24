@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "start": "tsx ./src/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "generate": "drizzle-kit generate",
+    "migrate": "drizzle-kit migrate"
   },
   "repository": {
     "type": "git",
@@ -21,9 +23,14 @@
   "description": "",
   "devDependencies": {
     "@types/node": "^26.6.6",
+    "drizzle-kit": "^0.31.11",
     "os": "^0.1.2",
     "path": "^0.12.7",
     "tsx": "^4.23.15",
     "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.45.4",
+    "postgres": "^4.1.1"
   }
 }

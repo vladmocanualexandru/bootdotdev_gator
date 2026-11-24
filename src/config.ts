@@ -21,7 +21,10 @@ function getConfigFilePath(): string {
     return path.join(homeDir, ".gatorconfig.json");
 }
 
-export function setUser(userName:string, config: Config) : Config {
+export function setUser(userName:string) : Config {
+
+    const config = readConfig();
+    
     config.currentUserName = userName;
 
     writeConfig(config);
