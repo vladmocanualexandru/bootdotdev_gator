@@ -1,0 +1,29 @@
+{
+  "name": "bootdotdev_gator",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "tsx ./src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vladmocanualexandru/bootdotdev_gator.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vladmocanualexandru/bootdotdev_gator/issues"
+  },
+  "homepage": "https://github.com/vladmocanualexandru/bootdotdev_gator#readme",
+  "description": "",
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "os": "^0.1.2",
+    "path": "^0.12.7",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  }
+}
