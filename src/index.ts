@@ -1,5 +1,5 @@
 import { setUser, readConfig } from "./config";
-import { argv } from 'node:process';
+import { argv } from 'process';
 
 type CommandHandler = (cmdName: string, ...args: string[]) => void;
 
