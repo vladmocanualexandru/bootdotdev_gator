@@ -1,47 +1,40 @@
-import { setUser, readConfig } from "./config";
 import { argv } from 'process';
+import { handlerLogin, handlerRegister, handlerReset, handlerUsers } from "./commands/users";
+import { handlerAgg } from "./commands/rss";
+import { handlerAddFeed, handlerFeeds, handlerFollow, handlerFollowing} from "./commands/feeds";
+import { CommandsRegistry, registerCommand, runCommand } from "./commandRegistry";
 
-type CommandHandler = (cmdName: string, ...args: string[]) => void;
 
-type CommandsRegistry = {
-  [commandName: string]: CommandHandler;
-}
 
-function registerCommand(registry: CommandsRegistry, cmdName: string, handler: CommandHandler) {
-  registry[cmdName] = handler;
-}
+async function main() {
+  try {
+    const commandsRegistry:CommandsRegistry = {};
+  
+    registerCommand(commandsRegistry, "login", handlerLogin);
+    registerCommand(commandsRegistry, "register", handlerRegister);
+    registerCommand(commandsRegistry, "reset", handlerReset);
+    registerCommand(commandsRegistry, "users", handlerUsers);
+    registerCommand(commandsRegistry, "agg", handlerAgg);
 
-function runCommand(registry: CommandsRegistry, cmdName: string, ...args: string[]) {
-  if (!registry[cmdName]) {
-    throw new Error(`Command not found: ${cmdName}`);
-  }
+    registerCommand(commandsRegistry, "addfeed", handlerAddFeed);
+    registerCommand(commandsRegistry, "follow", handlerFollow);
+    registerCommand(commandsRegistry, "following", handlerFollowing);
+    registerCommand(commandsRegistry, "feeds", handlerFeeds);
+  
+    const args = argv.slice(2);
+  
+    if (args.length === 0) {
+      console.error("No command provided.");
+      process.exit(1);
+    }
+  
+    await runCommand(commandsRegistry, args[0], ...args.slice(1));
 
-  registry[cmdName](cmdName, ...args);
-}
-
-function handlerLogin(cmdName: string, ...args: string[]) {
-  if (!args || args.length === 0) {
-    throw new Error("Login requires one parameter.");
-  }
-
-  setUser(args[0]);
-  console.log("Current user set to:", args[0]);
-
-}
-
-function main() {
-  const commandsRegistry:CommandsRegistry = {};
-
-  registerCommand(commandsRegistry, "login", handlerLogin);
-
-  const args = argv.slice(2);
-
-  if (args.length === 0) {
-    console.error("No command provided.");
+    process.exit(0);
+  } catch (err) {
+    console.error("Error:", err);
     process.exit(1);
   }
-
-  runCommand(commandsRegistry, args[0], ...args.slice(1));
 }
 
 main();
